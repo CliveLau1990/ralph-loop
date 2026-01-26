@@ -4,6 +4,9 @@ A long-running AI agent loop. Ralph automates software development tasks by iter
 
 This is a hackable script so you can configure it to your env and favorite agentic AI CLI. It's set up by default to use Claude Code in a Docker sandbox.
 
+![Ralph Wiggum Loop](https://github.com/user-attachments/assets/052d5290-7e83-4bfb-a6b5-6be761cbe890)
+
+
 ## Quick Start
 
 ```bash
@@ -51,9 +54,18 @@ Besides that:
 
 ## Getting Started
 
-### Step 1: Create a PRD
+### Step 1: Install Ralph
 
-Use the `prd-creator` skill to generate a PRD from your requirements:
+Run this in your project's directory to install Ralph.
+
+```bash
+npx @pageai/ralph-loop
+```
+
+### Step 2: Create a PRD + task list
+
+Use the `prd-creator` skill to generate a PRD from your requirements.<br/>
+Open up Claude Code and prompt it with **your requirements**. Like so:
 
 ```
 Use the prd-creator skill to help me create a PRD and task list for these requirements:
@@ -74,7 +86,7 @@ Use the prd-creator skill to help me create a PRD and task list for these requir
 // etc.
 ```
 
-Follow the skill's instructions and verify the PRD and then tasks.
+Then follow the Skill's instructions and verify the PRD and then tasks.<br/>
 **It is highly recommended that you review individual task requirements before starting the loop. Review EACH TASK INDIVIDUALLY.**
 
 ### Step 3: Set up the agent inside Docker sandbox
@@ -95,7 +107,7 @@ And follow the instructions to log in into Claude Code.
 ./ralph.sh -n 50 # Run Ralph Loop with 50 iterations
 ```
 
-### Adjusting to your language/framework
+### (optional) Adjusting to your language/framework
 
 This script assumes the following are installed:
 - [Playwright](https://playwright.dev/) for e2e testing
