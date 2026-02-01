@@ -1,56 +1,33 @@
-# Ralph Wiggum Loop implementation that works 
+# A Ralph Wiggum Loop implementation that works™
 
-A long-running AI agent loop. Ralph automates software development tasks by iteratively working through a task list until completion.
+Ralph is a long-running AI agent loop. Ralph automates software development tasks by iteratively working through a task list until completion.
 
-This is a hackable script so you can configure it to your env and favorite agentic AI CLI. It's set up by default to use Claude Code in a Docker sandbox.
+This is an implementation that actually works, containing a hackable script so you can configure it to your env and favorite agentic AI CLI. It's set up by default to use Claude Code in a Docker sandbox.
 
 ![Ralph Wiggum Loop](https://github.com/user-attachments/assets/052d5290-7e83-4bfb-a6b5-6be761cbe890)
 
-
-## Quick Start
-
-```bash
-# Run the agent loop (default: 10 iterations)
-./ralph.sh
-
-# Run with custom iteration limit
-./ralph.sh 5
-./ralph.sh -n 5
-./ralph.sh --max-iterations 5
-
-# Run exactly one iteration
-./ralph.sh --once
-
-# Show help
-./ralph.sh --help
-```
-
-> NB: you might need to run `chmod +x ralph.sh` to make the script executable.
-
-## How It Works
-
-Each iteration, Ralph will:
-1. Find the highest-priority incomplete task from `.agent/tasks.json`
-2. Work through the task steps defined in `.agent/tasks/TASK-{ID}.json`
-3. Run tests, linting, and type checking
-4. Update task status and commit changes
-5. Repeat until all tasks pass or max iterations reached
-
-## How Is This Different from Other Ralphs?
-
-This was kept hackable so you can make it your own.<br/>
-The script follows the original concepts of the Ralph Wiggum Loop, working with fresh contexts and providing clear verifiable feedback.
-
-It also works generically with any task set.
-
-Besides that:
-
-- it allows you to dump unstructured requirements and have the agent create a PRD and task list for you.
-- it uses a task lookup table with individual detailed steps -> more scalable as you get 100s of tasks done.
-- it's sandboxed and more secure
-- it shows progress and stats so you can keep an eye on what's been done
-- it instructs the agent to write and run automated tests and screenshots per task
-- it provides observability and traceability of the agent's work, showing a stream of output and capturing full historical logs per iteration
+- [Getting Started](#getting-started)
+  - [Step 1: Install Ralph](#step-1-install-ralph)
+  - [Step 2: Create a PRD + task list](#step-2-create-a-prd--task-list)
+  - [Step 3: Set up the agent inside Docker sandbox](#step-3-set-up-the-agent-inside-docker-sandbox)
+  - [Step 4: Run Ralph](#step-4-run-ralph)
+  - [(optional) Adjusting to your language/framework](#optional-adjusting-to-your-languageframework)
+- [Run the loop](#run-the-loop)
+- [How It Works](#how-it-works)
+- [How Is This Different from Other Ralphs?](#how-is-this-different-from-other-ralphs)
+- [Steering the Agent](#steering-the-agent)
+- [Features](#features)
+- [Support](#support)
+  - [Promise Tags](#promise-tags)
+  - [Exit Codes](#exit-codes)
+- [Structure](#structure)
+- [Skills](#skills)
+  - [Available Skills](#available-skills)
+  - [Skills Directory Structure](#skills-directory-structure)
+- [Reference](#reference)
+  - [Playwright configuration](#playwright-configuration)
+  - [Vitest configuration](#vitest-configuration)
+- [License](#license)
 
 ## Getting Started
 
@@ -119,9 +96,9 @@ This script assumes the following are installed:
 I recommend using a CLI to bootstrap your project with the necessary tools and dependencies, e.g.:
 
 ```bash
-npx create-vite@latest my-app --template react-ts
+npx create-vite@latest app --template react-ts
 # or
-npx create-next-app@latest my-app
+npx create-next-app@latest app
 ```
 
 If you must start from a blank slate, which is not recommended, you can use the following commands to install the necessary tools and dependencies:
@@ -140,6 +117,51 @@ npm i @vitejs/plugin-react @testing-library/dom @testing-library/jest-dom @testi
 ⚠️ If you are using a different language or testing framework, please adjust `.agent/PROMPT.md` to reflect your setup, server ports and startup commands etc.
 
 ⚠️ The default "mode" is "implementation". Depending on your use case, you might want to change `.agent/PROMPT.md` to a different mode, e.g. "refactor", "review", "test" etc.
+
+## Run the loop
+
+```bash
+# Run the agent loop (default: 10 iterations)
+./ralph.sh
+
+# Run with custom iteration limit
+./ralph.sh 5
+./ralph.sh -n 5
+./ralph.sh --max-iterations 5
+
+# Run exactly one iteration
+./ralph.sh --once
+
+# Show help
+./ralph.sh --help
+```
+
+> NB: you might need to run `chmod +x ralph.sh` to make the script executable.
+
+## How It Works
+
+Each iteration, Ralph will:
+1. Find the highest-priority incomplete task from `.agent/tasks.json`
+2. Work through the task steps defined in `.agent/tasks/TASK-{ID}.json`
+3. Run tests, linting, and type checking
+4. Update task status and commit changes
+5. Repeat until all tasks pass or max iterations reached
+
+## How Is This Different from Other Ralphs?
+
+This was kept hackable so you can make it your own.<br/>
+The script follows the original concepts of the Ralph Wiggum Loop, working with fresh contexts and providing clear verifiable feedback.
+
+It also works generically with any task set.
+
+Besides that:
+
+- it allows you to dump unstructured requirements and have the agent create a PRD and task list for you.
+- it uses a task lookup table with individual detailed steps -> more scalable as you get 100s of tasks done.
+- it's sandboxed and more secure
+- it shows progress and stats so you can keep an eye on what's been done
+- it instructs the agent to write and run automated tests and screenshots per task
+- it provides observability and traceability of the agent's work, showing a stream of output and capturing full historical logs per iteration
 
 ## Steering the Agent
 
@@ -243,7 +265,107 @@ Skills are symlinked from `.agent/skills/` to multiple locations for cross-tool 
 .cursor/skills/
 ```
 
+
+## Reference
+### Playwright configuration
+
+If you are using Playwright, here is a recommended configuration:
+
+```typescript:playwright.config.ts
+import { defineConfig, devices } from '@playwright/test';
+
+/**
+ * See https://playwright.dev/docs/test-configuration.
+ */
+export default defineConfig({
+  testDir: './tests',
+  /* Total timeout for the entire test run (30 minutes) */
+  globalTimeout: 30 * 60 * 1000,
+  /* Run tests in files in parallel */
+  fullyParallel: true,
+  /* Fail the build on CI if you accidentally left test.only in the source code. */
+  forbidOnly: !!process.env.CI,
+  /* Retry on failure - 2 on CI, 1 locally */
+  retries: process.env.CI ? 2 : 1,
+  /* Number of parallel workers */
+  workers: process.env.CI ? 1 : 6,
+  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
+  reporter: 'html',
+  /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
+  use: {
+    /* Base URL to use in actions like `await page.goto('')`. */
+    baseURL: 'http://localhost:3000',
+
+    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
+    trace: 'on-first-retry',
+  },
+
+  // NB: Only test in Desktop Chrome and nothing else.
+  projects: [
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
+    }
+  ],
+});
+```
+
+### Vitest configuration
+
+If you are using Vitest, here is a recommended configuration:
+
+```typescript:vitest.config.ts
+import { defineConfig } from 'vitest/config'
+import react from '@vitejs/plugin-react'
+import path from 'path'
+
+export default defineConfig({
+  plugins: [react()],
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: ['./vitest.setup.ts'],
+    include: ['**/*.test.{ts,tsx}'],
+    exclude: ['node_modules', '.next', 'tests'],
+  },
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './'),
+    },
+  },
+})
+
+```
+
+And:
+
+```typescript:vitest.setup.ts
+import '@testing-library/jest-dom/vitest'
+import { vi } from 'vitest'
+import React from 'react'
+
+// Mock next/image
+vi.mock('next/image', () => ({
+  default: ({ src, alt, ...props }: { src: string; alt: string }) => {
+    return React.createElement('img', { src, alt, ...props })
+  },
+}))
+
+// Mock next/link
+vi.mock('next/link', () => ({
+  default: ({
+    children,
+    href,
+    ...props
+  }: {
+    children: React.ReactNode
+    href: string
+  }) => {
+    return React.createElement('a', { href, ...props }, children)
+  },
+}))
+```
+
 ## License
 
 MIT
-](https://github.com/danmindru/ralph-loop/tree/main)
