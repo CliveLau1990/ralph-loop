@@ -1,4 +1,4 @@
-# Ralph Loop
+# Ralph Wiggum Loop implementation that works 
 
 A long-running AI agent loop. Ralph automates software development tasks by iteratively working through a task list until completion.
 
@@ -246,3 +246,4 @@ Skills are symlinked from `.agent/skills/` to multiple locations for cross-tool 
 ## License
 
 MIT
+](https://github.com/danmindru/ralph-loop/tree/main)
