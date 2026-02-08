@@ -7,11 +7,11 @@ This is an implementation that actually works, containing a hackable script so y
 ![Ralph Wiggum Loop](https://github.com/user-attachments/assets/052d5290-7e83-4bfb-a6b5-6be761cbe890)
 
 - [Getting Started](#getting-started)
+  - [(Optional) Adjusting to your language/framework](#optional-adjusting-to-your-languageframework)
   - [Step 1: Install Ralph](#step-1-install-ralph)
   - [Step 2: Create a PRD + task list](#step-2-create-a-prd--task-list)
   - [Step 3: Set up the agent inside Docker sandbox](#step-3-set-up-the-agent-inside-docker-sandbox)
   - [Step 4: Run Ralph](#step-4-run-ralph)
-  - [(optional) Adjusting to your language/framework](#optional-adjusting-to-your-languageframework)
 - [Run the loop](#run-the-loop)
 - [How It Works](#how-it-works)
 - [How Is This Different from Other Ralphs?](#how-is-this-different-from-other-ralphs)
@@ -30,6 +30,41 @@ This is an implementation that actually works, containing a hackable script so y
 - [License](#license)
 
 ## Getting Started
+
+### (Optional) Adjusting to your language/framework
+
+This script assumes the following are installed:
+- [Playwright](https://playwright.dev/) for e2e testing
+- [Vitest](https://vitest.dev/) for unit testing
+- [TypeScript](https://www.typescriptlang.org/) for type checking
+- [ESLint](https://eslint.org/) for linting
+- [Prettier](https://prettier.io/) for formatting
+
+I recommend using a CLI to bootstrap your project with the necessary tools and dependencies, e.g.:
+
+```bash
+npx create-vite@latest src --template react-ts
+# or
+npx create-next-app@latest src
+```
+
+If you must start from a blank slate, which is not recommended, you can use the following commands to install the necessary tools and dependencies:
+
+Install with:
+
+```bash
+npm i @playwright/test vitest jsdom typescript eslint prettier -D
+
+# If using React, also recommend installing:
+npm i @vitejs/plugin-react @testing-library/dom @testing-library/jest-dom @testing-library/react @testing-library/user-event -D
+```
+
+--------------------------------
+
+⚠️ If you are using a different language or testing framework, please adjust `.agent/PROMPT.md` to reflect your setup, server ports and startup commands etc.
+
+⚠️ The default "mode" is "implementation". Depending on your use case, you might want to change `.agent/PROMPT.md` to a different mode, e.g. "refactor", "review", "test" etc.
+
 
 ### Step 1: Install Ralph
 
@@ -71,7 +106,7 @@ Then follow the Skill's instructions and verify the PRD and then tasks.<br/>
 Authenticate inside the Docker sandbox before running Ralph. Run:
 
 ```bash
-docker sandbox run --credentials host claude
+docker sandbox run claude .
 ```
 
 And follow the instructions to log in into Claude Code.
@@ -83,40 +118,6 @@ And follow the instructions to log in into Claude Code.
 ```bash
 ./ralph.sh -n 50 # Run Ralph Loop with 50 iterations
 ```
-
-### (optional) Adjusting to your language/framework
-
-This script assumes the following are installed:
-- [Playwright](https://playwright.dev/) for e2e testing
-- [Vitest](https://vitest.dev/) for unit testing
-- [TypeScript](https://www.typescriptlang.org/) for type checking
-- [ESLint](https://eslint.org/) for linting
-- [Prettier](https://prettier.io/) for formatting
-
-I recommend using a CLI to bootstrap your project with the necessary tools and dependencies, e.g.:
-
-```bash
-npx create-vite@latest app --template react-ts
-# or
-npx create-next-app@latest app
-```
-
-If you must start from a blank slate, which is not recommended, you can use the following commands to install the necessary tools and dependencies:
-
-Install with:
-
-```bash
-npm i @playwright/test vitest jsdom typescript eslint prettier -D
-
-# If using React, also recommend installing:
-npm i @vitejs/plugin-react @testing-library/dom @testing-library/jest-dom @testing-library/react @testing-library/user-event -D
-```
-
---------------------------------
-
-⚠️ If you are using a different language or testing framework, please adjust `.agent/PROMPT.md` to reflect your setup, server ports and startup commands etc.
-
-⚠️ The default "mode" is "implementation". Depending on your use case, you might want to change `.agent/PROMPT.md` to a different mode, e.g. "refactor", "review", "test" etc.
 
 ## Run the loop
 
