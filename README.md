@@ -28,6 +28,7 @@ This is an implementation that actually works, containing a hackable script so y
 - [Reference](#reference)
   - [Playwright configuration](#playwright-configuration)
   - [Vitest configuration](#vitest-configuration)
+  - [Running with a different agentic CLI](#running-with-a-different-agentic-cli)
   - [Starting from scratch](#starting-from-scratch)
 - [License](#license)
 
@@ -90,7 +91,9 @@ docker sandbox run claude .
 
 And follow the instructions to log in into Claude Code.
 
-> Answer "Yes" to "Bypass Permissions mode", that's the exact reason why you are using the Docker sandbox.
+👉 Answer "Yes" to `Bypass Permissions mode`, that's the exact reason why you are using the Docker sandbox.
+
+If you want to use a different agentic CLI, see [Running with a different agentic CLI](#running-with-a-different-agentic-cli).
 
 ### 4️⃣ Step 4: Run Ralph
 
@@ -186,7 +189,7 @@ The agent will check this file each iteration and if it finds any critical work,
 The `ralph.sh` script is designed to be hackable.
 It is configured to use Claude Code in a Docker sandbox by default, but with a one-liner change you can change it to use any other agentic AI CLI.
 
-Check the `ralph.sh` script around `# 👉 This is the main command loop.` for the main command loop.
+Check the `ralph.sh` script around `# This is the main command loop.` for the main command loop.
 
 > NB: skills are supported by all major agentic AI CLIs via symlinks.
 
@@ -362,6 +365,22 @@ vi.mock('next/link', () => ({
   },
 }))
 ```
+
+### Running with a different agentic CLI
+
+If you want to use a different agentic CLI, you can adjust the `ralph.sh` script to reflect your CLI of choice.
+
+Check the `ralph.sh` script around `# This is the main command loop.` for the main command loop.
+
+Replace `docker sandbox run claude . --` with the your favorite CLI. Remember to also update the options after the `--`.
+
+```
+docker sandbox run codex . # for Codex CLI
+docker sandbox run gemini . # for Gemini CLI
+```
+
+Docker currently supports: `claude`, `codex`, `gemini`, `cagent`, `kiro`.
+See more in [Docker's docs](https://docs.docker.com/ai/sandboxes/migration/).
 
 ### Starting from scratch
 
