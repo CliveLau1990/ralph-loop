@@ -60,7 +60,11 @@ Use the `prd-creator` skill to generate a PRD from your requirements.<br/>
 Open up Claude Code and prompt it with **your requirements**. Like so:
 
 ```
-Use the prd-creator skill to help me create a PRD and task list for these requirements:
+Use the prd-creator skill to help me create a PRD and task list for the below requirements.
+
+An app is already set up with Next.js, Tailwind CSS and TypeScript.
+
+Requirements:
 
 - A SaaS product that helps users manage their finances.
 - Target audience: Small business owners and freelancers.
@@ -72,11 +76,18 @@ Use the prd-creator skill to help me create a PRD and task list for these requir
   - Connect to bank accounts and credit cards.
   - Connect to accounting software.
   - Connect to payment processors.
-- Next.js web app with Tailwind CSS and TypeScript.
 - Use the shadcn/ui library for components.
+- Integrate with Stripe for payments.
+- Use Supabase for database.
+- You can find env variables in the .env.example file: SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, STRIPE_SECRET_KEY, etc. are available in the runtime.
 
 // etc.
 ```
+
+Pro tips:
+- mention libraries and frameworks you want to use
+- mention env variables, e.g. for database, 3rd party API keys, etc. Store them in a .env file that you add to **.gitignore**
+- *it's fine to write in your own language*
 
 Then follow the Skill's instructions and verify the PRD and then tasks.<br/>
 **It is highly recommended that you review individual task requirements before starting the loop. Review EACH TASK INDIVIDUALLY.**
@@ -279,28 +290,19 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './tests',
-  /* Total timeout for the entire test run (30 minutes) */
-  globalTimeout: 30 * 60 * 1000,
-  /* Run tests in files in parallel */
   fullyParallel: true,
-  /* Fail the build on CI if you accidentally left test.only in the source code. */
+  globalTimeout: 30 * 60 * 1000,
   forbidOnly: !!process.env.CI,
-  /* Retry on failure - 2 on CI, 1 locally */
   retries: process.env.CI ? 2 : 1,
-  /* Number of parallel workers */
-  workers: process.env.CI ? 1 : 6,
-  /* Reporter to use. See https://playwright.dev/docs/test-reporters */
+  workers: process.env.CI ? 3 : 6,
   reporter: 'html',
-  /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    /* Base URL to use in actions like `await page.goto('')`. */
     baseURL: 'http://localhost:3000',
-
-    /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
   },
 
-  // NB: Only test in Desktop Chrome and nothing else.
+
+  // NB: only chromium will run in Docker (arm64).
   projects: [
     {
       name: 'chromium',
