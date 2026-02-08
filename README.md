@@ -32,6 +32,8 @@ This is an implementation that actually works, containing a hackable script so y
   - [Starting from scratch](#starting-from-scratch)
 - [License](#license)
 
+---------------------------------
+
 ## Getting Started
 
 ### (Optional) Set up code base
@@ -87,6 +89,8 @@ Requirements:
 Pro tips:
 - mention libraries and frameworks you want to use
 - mention env variables, e.g. for database, 3rd party API keys, etc. Store them in a .env file that you add to **.gitignore**
+- describe user flows and journeys
+- be as descriptive as possible
 - *it's fine to write in your own language*
 
 Then follow the Skill's instructions and verify the PRD and then tasks.<br/>
@@ -104,7 +108,7 @@ And follow the instructions to log in into Claude Code.
 
 👉 Answer "Yes" to `Bypass Permissions mode`, that's the exact reason why you are using the Docker sandbox.
 
-If you want to use a different agentic CLI, see [Running with a different agentic CLI](#running-with-a-different-agentic-cli).
+> If you want to use a different agentic CLI, see [Running with a different agentic CLI](#running-with-a-different-agentic-cli).
 
 ### 4️⃣ Step 4: Run Ralph
 
@@ -132,7 +136,7 @@ If you want to use a different agentic CLI, see [Running with a different agenti
 
 > NB: you might need to run `chmod +x ralph.sh` to make the script executable.
 
-⚠️ The default "mode" is "implementation". Depending on your use case, you might want to change `.agent/PROMPT.md` to a different mode, e.g. "refactor", "review", "test" etc.
+> ⚠️ The default "mode" is "implementation". Depending on your use case, you might want to change `.agent/PROMPT.md` to a different mode, e.g. "refactor", "review", "test" etc.
 
 ⚠️ If you want to use a different language or testing framework, see below.
 
@@ -148,6 +152,8 @@ This script assumes the following are installed:
 If you'd like to use a different language, testing framework etc. please adjust `.agent/PROMPT.md` to reflect your setup, server ports and startup commands etc.
 
 👉 The loop is controlled by this prompt, which will be sent to the agent each iteration.
+
+---------------------------------
 
 ## How It Works
 
@@ -398,6 +404,8 @@ npm i @playwright/test vitest jsdom typescript eslint prettier -D
 # If using React, also recommend installing:
 npm i @vitejs/plugin-react @testing-library/dom @testing-library/jest-dom @testing-library/react @testing-library/user-event -D
 ```
+
+It is recommended that you add skills for your specific language and framework. See [skills.sh](https://skills.sh) to discover existing skills.
 
 ## License
 
