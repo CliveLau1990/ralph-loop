@@ -8,10 +8,10 @@ This is an implementation that actually works, containing a hackable script so y
 
 - [Getting Started](#getting-started)
   - [(Optional) Set up code base](#optional-set-up-code-base)
-  - [Step 1: Install Ralph](#step-1-install-ralph)
-  - [Step 2: Create a PRD + task list](#step-2-create-a-prd--task-list)
-  - [Step 3: Set up the agent inside Docker sandbox](#step-3-set-up-the-agent-inside-docker-sandbox)
-  - [Step 4: Run Ralph](#step-4-run-ralph)
+  - [1️⃣ Step 1: Install Ralph](#1️⃣-step-1-install-ralph)
+  - [2️⃣ Step 2: Create a PRD + task list](#2️⃣-step-2-create-a-prd--task-list)
+  - [3️⃣ Step 3: Set up the agent inside Docker sandbox](#3️⃣-step-3-set-up-the-agent-inside-docker-sandbox)
+  - [4️⃣ Step 4: Run Ralph](#4️⃣-step-4-run-ralph)
 - [Run the loop](#run-the-loop)
   - [(Optional) Adjusting to your language/framework](#optional-adjusting-to-your-languageframework)
 - [How It Works](#how-it-works)
@@ -45,7 +45,7 @@ npx create-next-app@latest src
 
 If you must start from a blank slate, which is not recommended, see [Starting from scratch](#starting-from-scratch)
 
-### Step 1: Install Ralph
+### 1️⃣ Step 1: Install Ralph
 
 Run this in your project's directory to install Ralph.
 
@@ -53,7 +53,7 @@ Run this in your project's directory to install Ralph.
 npx @pageai/ralph-loop
 ```
 
-### Step 2: Create a PRD + task list
+### 2️⃣ Step 2: Create a PRD + task list
 
 Use the `prd-creator` skill to generate a PRD from your requirements.<br/>
 Open up Claude Code and prompt it with **your requirements**. Like so:
@@ -80,7 +80,7 @@ Use the prd-creator skill to help me create a PRD and task list for these requir
 Then follow the Skill's instructions and verify the PRD and then tasks.<br/>
 **It is highly recommended that you review individual task requirements before starting the loop. Review EACH TASK INDIVIDUALLY.**
 
-### Step 3: Set up the agent inside Docker sandbox
+### 3️⃣ Step 3: Set up the agent inside Docker sandbox
 
 Authenticate inside the Docker sandbox before running Ralph. Run:
 
@@ -92,7 +92,7 @@ And follow the instructions to log in into Claude Code.
 
 > Answer "Yes" to "Bypass Permissions mode", that's the exact reason why you are using the Docker sandbox.
 
-### Step 4: Run Ralph
+### 4️⃣ Step 4: Run Ralph
 
 ```bash
 ./ralph.sh -n 50 # Run Ralph Loop with 50 iterations
