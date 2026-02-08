@@ -7,12 +7,13 @@ This is an implementation that actually works, containing a hackable script so y
 ![Ralph Wiggum Loop](https://github.com/user-attachments/assets/052d5290-7e83-4bfb-a6b5-6be761cbe890)
 
 - [Getting Started](#getting-started)
-  - [(Optional) Adjusting to your language/framework](#optional-adjusting-to-your-languageframework)
+  - [(Optional) Set up code base](#optional-set-up-code-base)
   - [Step 1: Install Ralph](#step-1-install-ralph)
   - [Step 2: Create a PRD + task list](#step-2-create-a-prd--task-list)
   - [Step 3: Set up the agent inside Docker sandbox](#step-3-set-up-the-agent-inside-docker-sandbox)
   - [Step 4: Run Ralph](#step-4-run-ralph)
 - [Run the loop](#run-the-loop)
+  - [(Optional) Adjusting to your language/framework](#optional-adjusting-to-your-languageframework)
 - [How It Works](#how-it-works)
 - [How Is This Different from Other Ralphs?](#how-is-this-different-from-other-ralphs)
 - [Steering the Agent](#steering-the-agent)
@@ -27,18 +28,12 @@ This is an implementation that actually works, containing a hackable script so y
 - [Reference](#reference)
   - [Playwright configuration](#playwright-configuration)
   - [Vitest configuration](#vitest-configuration)
+  - [Starting from scratch](#starting-from-scratch)
 - [License](#license)
 
 ## Getting Started
 
-### (Optional) Adjusting to your language/framework
-
-This script assumes the following are installed:
-- [Playwright](https://playwright.dev/) for e2e testing
-- [Vitest](https://vitest.dev/) for unit testing
-- [TypeScript](https://www.typescriptlang.org/) for type checking
-- [ESLint](https://eslint.org/) for linting
-- [Prettier](https://prettier.io/) for formatting
+### (Optional) Set up code base
 
 I recommend using a CLI to bootstrap your project with the necessary tools and dependencies, e.g.:
 
@@ -48,23 +43,7 @@ npx create-vite@latest src --template react-ts
 npx create-next-app@latest src
 ```
 
-If you must start from a blank slate, which is not recommended, you can use the following commands to install the necessary tools and dependencies:
-
-Install with:
-
-```bash
-npm i @playwright/test vitest jsdom typescript eslint prettier -D
-
-# If using React, also recommend installing:
-npm i @vitejs/plugin-react @testing-library/dom @testing-library/jest-dom @testing-library/react @testing-library/user-event -D
-```
-
---------------------------------
-
-⚠️ If you are using a different language or testing framework, please adjust `.agent/PROMPT.md` to reflect your setup, server ports and startup commands etc.
-
-⚠️ The default "mode" is "implementation". Depending on your use case, you might want to change `.agent/PROMPT.md` to a different mode, e.g. "refactor", "review", "test" etc.
-
+If you must start from a blank slate, which is not recommended, see [Starting from scratch](#starting-from-scratch)
 
 ### Step 1: Install Ralph
 
@@ -138,6 +117,23 @@ And follow the instructions to log in into Claude Code.
 ```
 
 > NB: you might need to run `chmod +x ralph.sh` to make the script executable.
+
+⚠️ The default "mode" is "implementation". Depending on your use case, you might want to change `.agent/PROMPT.md` to a different mode, e.g. "refactor", "review", "test" etc.
+
+⚠️ If you want to use a different language or testing framework, see below.
+
+### (Optional) Adjusting to your language/framework
+
+This script assumes the following are installed:
+- [Playwright](https://playwright.dev/) for e2e testing
+- [Vitest](https://vitest.dev/) for unit testing
+- [TypeScript](https://www.typescriptlang.org/) for type checking
+- [ESLint](https://eslint.org/) for linting
+- [Prettier](https://prettier.io/) for formatting
+
+If you'd like to use a different language, testing framework etc. please adjust `.agent/PROMPT.md` to reflect your setup, server ports and startup commands etc.
+
+👉 The loop is controlled by this prompt, which will be sent to the agent each iteration.
 
 ## How It Works
 
@@ -266,8 +262,8 @@ Skills are symlinked from `.agent/skills/` to multiple locations for cross-tool 
 .cursor/skills/
 ```
 
-
 ## Reference
+
 ### Playwright configuration
 
 If you are using Playwright, here is a recommended configuration:
@@ -365,6 +361,21 @@ vi.mock('next/link', () => ({
     return React.createElement('a', { href, ...props }, children)
   },
 }))
+```
+
+### Starting from scratch
+
+For AI to actually verify its implementation and for the loop to work, you need a way to verify it.
+
+To that end, at the minimum you need an end-to-end test framework and a unit test framework.
+
+For example, you can use the following commands to install Playwright and Vitest:
+
+```bash
+npm i @playwright/test vitest jsdom typescript eslint prettier -D
+
+# If using React, also recommend installing:
+npm i @vitejs/plugin-react @testing-library/dom @testing-library/jest-dom @testing-library/react @testing-library/user-event -D
 ```
 
 ## License
