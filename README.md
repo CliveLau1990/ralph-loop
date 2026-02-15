@@ -42,11 +42,9 @@ I recommend using a CLI to bootstrap your project with the necessary tools and d
 
 ```bash
 npx create-vite@latest src --template react-ts
-# or
-npx create-next-app@latest src
 ```
 
-If you must start from a blank slate, which is not recommended, see [Starting from scratch](#starting-from-scratch)
+> If you must start from a blank slate, which is not recommended, see [Starting from scratch](#starting-from-scratch).
 
 ### 1️⃣ Step 1: Install Ralph
 
@@ -64,7 +62,7 @@ Open up Claude Code and prompt it with **your requirements**. Like so:
 ```
 Use the prd-creator skill to help me create a PRD and task list for the below requirements.
 
-An app is already set up with Next.js, Tailwind CSS and TypeScript.
+An app is already set up with React, Tailwind CSS and TypeScript.
 
 Requirements:
 
@@ -90,6 +88,7 @@ Pro tips:
 - mention libraries and frameworks you want to use
 - mention env variables, e.g. for database, 3rd party API keys, etc. Store them in a .env file that you add to **.gitignore**
 - describe user flows and journeys
+- add relevant docs and UI references if applicable inside `/docs` and mention them in the requirements
 - be as descriptive as possible
 - *it's fine to write in your own language*
 
@@ -352,14 +351,14 @@ import '@testing-library/jest-dom/vitest'
 import { vi } from 'vitest'
 import React from 'react'
 
-// Mock next/image
+// If using Next.js, mock next/image
 vi.mock('next/image', () => ({
   default: ({ src, alt, ...props }: { src: string; alt: string }) => {
     return React.createElement('img', { src, alt, ...props })
   },
 }))
 
-// Mock next/link
+// If using Next.js, mock next/link
 vi.mock('next/link', () => ({
   default: ({
     children,
