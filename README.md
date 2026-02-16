@@ -41,7 +41,7 @@ This is an implementation that actually works, containing a hackable script so y
 I recommend using a CLI to bootstrap your project with the necessary tools and dependencies, e.g.:
 
 ```bash
-npx @tanstack/cli create lib --add-ons shadcn,eslint,form,tanstack-query
+npx @tanstack/cli create lib --add-ons shadcn,eslint,form,tanstack-query --no-git
 ```
 
 > If you must start from a blank slate, which is not recommended, see [Starting from scratch](#starting-from-scratch). You can also go for a more barebone start by running `npx create-vite@latest src --template react-ts`
@@ -381,7 +381,7 @@ Check the `ralph.sh` script around `# This is the main command loop.` for the ma
 
 Replace `docker sandbox run claude . --` with the your favorite CLI. Remember to also update the options after the `--`.
 
-```
+```bash
 docker sandbox run codex . # for Codex CLI
 docker sandbox run gemini . # for Gemini CLI
 ```
