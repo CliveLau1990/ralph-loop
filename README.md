@@ -12,7 +12,7 @@ This is an implementation that actually works, containing a hackable script so y
   - [2️⃣ Step 2: Create a PRD + task list](#2️⃣-step-2-create-a-prd--task-list)
   - [3️⃣ Step 3: Set up the agent inside Docker sandbox](#3️⃣-step-3-set-up-the-agent-inside-docker-sandbox)
   - [4️⃣ Step 4: Run Ralph](#4️⃣-step-4-run-ralph)
-- [Run the loop](#run-the-loop)
+- [Running the Ralph Loop with custom options](#running-the-ralph-loop-with-custom-options)
   - [(Optional) Adjusting to your language/framework](#optional-adjusting-to-your-languageframework)
 - [How It Works](#how-it-works)
 - [How Is This Different from Other Ralphs?](#how-is-this-different-from-other-ralphs)
@@ -115,7 +115,9 @@ And follow the instructions to log in into Claude Code.
 ./ralph.sh -n 50 # Run Ralph Loop with 50 iterations
 ```
 
-## Run the loop
+> ✍️ Note: the first iteration will be spent on ensuring the sandbox environment is set up correctly. Expect 5 minutes to complete.
+
+## Running the Ralph Loop with custom options
 
 ```bash
 # Run the agent loop (default: 10 iterations)
