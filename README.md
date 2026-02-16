@@ -41,10 +41,10 @@ This is an implementation that actually works, containing a hackable script so y
 I recommend using a CLI to bootstrap your project with the necessary tools and dependencies, e.g.:
 
 ```bash
-npx create-vite@latest src --template react-ts
+npx @tanstack/cli create lib --add-ons shadcn,eslint,form,tanstack-query
 ```
 
-> If you must start from a blank slate, which is not recommended, see [Starting from scratch](#starting-from-scratch).
+> If you must start from a blank slate, which is not recommended, see [Starting from scratch](#starting-from-scratch). You can also go for a more barebone start by running `npx create-vite@latest src --template react-ts`
 
 ### 1️⃣ Step 1: Install Ralph
 
@@ -393,7 +393,7 @@ See more in [Docker's docs](https://docs.docker.com/ai/sandboxes/migration/).
 
 For AI to actually verify its implementation and for the loop to work, you need a way to verify it.
 
-To that end, at the minimum you need an end-to-end test framework and a unit test framework.
+To that end, at the minimum you'll need an end-to-end test framework and a unit test framework.
 
 For example, you can use the following commands to install Playwright and Vitest:
 
