@@ -41,4 +41,4 @@ Verify written code by:
 - Checking for type errors
 - Checking for lint errors
 - Smoke testing and checking for runtime errors with Playwright
-- Takins screenshots and verifying the UI is as expected
+- Taking screenshots and verifying the UI is as expected
