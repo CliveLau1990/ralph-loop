@@ -1,5 +1,7 @@
 # A Ralph Wiggum Loop implementation that works™
 
+[![@pageai/ralph-loop version](https://img.shields.io/npm/v/@pageai/ralph-loop?label=npm&style=flat)](https://github.com/pageai-pro/ralph-loop)
+
 Ralph is a long-running AI agent loop. Ralph automates software development tasks by iteratively working through a task list until completion. This allows for long running agent loops, effectively enabling AI to code for days at a time.
 
 This is an implementation that actually works, containing a hackable script so you can configure it to your env and favorite agentic AI CLI. It's set up by default to use Claude Code in a Docker sandbox, but supports [many other agentic AI CLIs](#running-with-a-different-agentic-cli).
