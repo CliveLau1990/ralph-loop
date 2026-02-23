@@ -1,10 +1,12 @@
 # A Ralph Wiggum Loop implementation that works™
 
-Ralph is a long-running AI agent loop. Ralph automates software development tasks by iteratively working through a task list until completion.
+Ralph is a long-running AI agent loop. Ralph automates software development tasks by iteratively working through a task list until completion. This allows for long running agent loops, effectively enabling AI to code for days at a time.
 
-This is an implementation that actually works, containing a hackable script so you can configure it to your env and favorite agentic AI CLI. It's set up by default to use Claude Code in a Docker sandbox.
+This is an implementation that actually works, containing a hackable script so you can configure it to your env and favorite agentic AI CLI. It's set up by default to use Claude Code in a Docker sandbox, but supports [many other agentic AI CLIs](#running-with-a-different-agentic-cli).
 
-![Ralph Wiggum Loop](https://github.com/user-attachments/assets/052d5290-7e83-4bfb-a6b5-6be761cbe890)
+#### 👉 [Watch the video](https://www.youtube.com/watch?v=3TL8Ez66I3o) for an in-depth walkthrough.
+
+[![Ralph Wiggum Loop](https://github.com/user-attachments/assets/be94b8ba-b073-489d-b07e-d11db975a907)](https://www.youtube.com/watch?v=3TL8Ez66I3o)
 
 - [Getting Started](#getting-started)
   - [(Optional) Set up code base](#optional-set-up-code-base)
@@ -17,7 +19,6 @@ This is an implementation that actually works, containing a hackable script so y
 - [How It Works](#how-it-works)
 - [How Is This Different from Other Ralphs?](#how-is-this-different-from-other-ralphs)
 - [Steering the Agent](#steering-the-agent)
-- [Features](#features)
 - [Support](#support)
   - [Promise Tags](#promise-tags)
   - [Exit Codes](#exit-codes)
@@ -41,7 +42,7 @@ This is an implementation that actually works, containing a hackable script so y
 I recommend using a CLI to bootstrap your project with the necessary tools and dependencies, e.g.:
 
 ```bash
-npx @tanstack/cli create lib --add-ons shadcn,eslint,form,tanstack-query --no-git
+npx @tanstack/cli create lib --add-ons eslint,form,tanstack-query,nitro --no-git
 ```
 
 > If you must start from a blank slate, which is not recommended, see [Starting from scratch](#starting-from-scratch). You can also go for a more barebone start by running `npx create-vite@latest src --template react-ts`
@@ -57,7 +58,7 @@ npx @pageai/ralph-loop
 ### 2️⃣ Step 2: Create a PRD + task list
 
 Use the `prd-creator` skill to generate a PRD from your requirements.<br/>
-Open up Claude Code and prompt it with **your requirements**. Like so:
+Open up Claude Code or Cursor etc. and prompt it with **your requirements**. Like so:
 
 ```
 Use the prd-creator skill to help me create a PRD and task list for the below requirements.
@@ -84,15 +85,20 @@ Requirements:
 // etc.
 ```
 
-Pro tips:
+<details>
+<summary><strong>✨ Pro tips</strong></summary>
+
 - mention libraries and frameworks you want to use
-- mention env variables, e.g. for database, 3rd party API keys, etc. Store them in a .env file that you add to **.gitignore**
+- mention env variables, e.g. for DB, 3rd party API keys, etc. Store them in `.env` and add it to **.gitignore**
 - describe user flows and journeys
 - add relevant docs and UI references if applicable inside `/docs` and mention them in the requirements
 - be as descriptive as possible
 - *it's fine to write in your own language*
 
-Then follow the Skill's instructions and verify the PRD and then tasks.<br/>
+</details>
+<br/>
+
+Then, follow the Skill's instructions and verify the PRD and then tasks.<br/>
 **It is highly recommended that you review individual task requirements before starting the loop. Review EACH TASK INDIVIDUALLY.**
 
 ### 3️⃣ Step 3: Set up the agent inside Docker sandbox
@@ -162,7 +168,7 @@ Each iteration, Ralph will:
 1. Find the highest-priority incomplete task from `.agent/tasks.json`
 2. Work through the task steps defined in `.agent/tasks/TASK-{ID}.json`
 3. Run tests, linting, and type checking
-4. Update task status and commit changes
+4. Complete task, take screenshot, update task status and commit changes
 5. Repeat until all tasks pass or max iterations reached
 
 ## How Is This Different from Other Ralphs?
@@ -172,10 +178,27 @@ The script follows the original concepts of the Ralph Wiggum Loop, working with 
 
 It also works generically with any task set.
 
+<details>
+<summary><strong>✨ Features</strong></summary>
+
+- **PRD generation** - Creates a PRD and task list from requirements
+- **Task lookup table generation** - Creates a task lookup table from the PRD
+- **Task breakdown + step generation** - Breaks down each task into manageable steps
+- **Iteration tracking** - Shows progress through iterations with timing
+- **Stream preview** - Shows live output from the Agent
+- **Step detection** - Identifies current activity (Thinking, Implementing, Testing, etc.)
+- **Screenshot capture** - Captures a screenshot of the current screen
+- **Notifications** - Alerts when human input is needed
+- **History logging** - Saves clean output from each iteration
+- **Timing** - Shows timing metrics for each iteration and total time
+- **Steering** - Allows prioritizing critical work that needs to be done before the loop can continue
+</details>
+
+<br/>
 Besides that:
 
 - it allows you to dump unstructured requirements and have the agent create a PRD and task list for you.
-- it uses a task lookup table with individual detailed steps -> more scalable as you get 100s of tasks done.
+- it uses a task lookup table with individual detailed steps → more scalable as you get 100s of tasks done.
 - it's sandboxed and more secure
 - it shows progress and stats so you can keep an eye on what's been done
 - it instructs the agent to write and run automated tests and screenshots per task
@@ -188,19 +211,6 @@ In some cases, you might notice the agent is having trouble, slowed down or stru
 While the loop is running, you can edit the `.agent/STEERING.md` file to add critical work that needs to be done before the loop can continue.
 
 The agent will check this file each iteration and if it finds any critical work, it will skip tasks and complete the critical work first.
-
-## Features
-
-- **PRD generation** - Creates a PRD and task list from requirements
-- **Task lookup table generation** - Creates a task lookup table from the PRD
-- **Task breakdown + step generation** - Breaks down each task into manageable steps
-- **Iteration tracking** - Shows progress through iterations with timing
-- **Stream preview** - Shows live output from the Agent
-- **Step detection** - Identifies current activity (Thinking, Implementing, Testing, etc.)
-- **Screenshot capture** - Captures a screenshot of the current screen
-- **Notifications** - Alerts when human input is needed
-- **History logging** - Saves clean output from each iteration
-- **Timing** - Shows timing metrics for each iteration and total time
 
 ## Support
 
@@ -258,6 +268,8 @@ Skills are reusable agent capabilities that provide specialized knowledge and wo
 | `prd-creator`                 | Create PRDs and task breakdowns for Ralph               |
 | `skill-creator`               | Create new skills                                       |
 | `vercel-react-best-practices` | React/Next.js performance patterns                      |
+| `mysql`                       | MySQL/InnoDB schema, indexing, query tuning, and ops    |
+| `postgres`                    | PostgreSQL best practices and query optimization        |
 | `web-design-guidelines`       | UI/UX design principles                                 |
 
 ### Skills Directory Structure
@@ -269,18 +281,14 @@ Skills are symlinked from `.agent/skills/` to multiple locations for cross-tool 
 .agent/skills/
     ├── component-refactoring/
     ├── e2e-tester/
-    ├── frontend-code-review/
-    ├── frontend-testing/
-    ├── prd-creator/
-    ├── skill-creator/
-    ├── vercel-react-best-practices/
-    └── web-design-guidelines/
+    ├── postgres/
+    ├── ...
 
 # Symlinks -> .agent/skills/*
-.agents/skills/
-.claude/skills/
-.codex/skills/
-.cursor/skills/
+.agents/skills/*
+.claude/skills/*
+.codex/skills/*
+.cursor/skills/*
 ```
 
 ## Reference
@@ -324,29 +332,28 @@ export default defineConfig({
 If you are using Vitest, here is a recommended configuration:
 
 ```typescript:vitest.config.ts
-import { defineConfig } from 'vitest/config'
-import react from '@vitejs/plugin-react'
-import path from 'path'
+import { defineConfig } from "vitest/config";
+import react from "@vitejs/plugin-react";
+import path from "path";
 
 export default defineConfig({
   plugins: [react()],
   test: {
-    environment: 'jsdom',
+    environment: "node",
     globals: true,
-    setupFiles: ['./vitest.setup.ts'],
-    include: ['**/*.test.{ts,tsx}'],
-    exclude: ['node_modules', '.next', 'tests'],
+    include: ["lib/**/*.test.ts", "lib/**/*.test.tsx"],
+    // setupFiles: ['./vitest.setup.ts'], // Include this if using Next.js
   },
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './'),
+      "@": path.resolve(__dirname),
     },
   },
-})
+});
 
 ```
 
-And:
+If you are using Next.js, you'll also need a `vitest.setup.ts` file to mock the `next/image` and `next/link` components.
 
 ```typescript:vitest.setup.ts
 import '@testing-library/jest-dom/vitest'
@@ -388,8 +395,8 @@ docker sandbox run codex . # for Codex CLI
 docker sandbox run gemini . # for Gemini CLI
 ```
 
-Docker currently supports: `claude`, `codex`, `gemini`, `cagent`, `kiro`.
-See more in [Docker's docs](https://docs.docker.com/ai/sandboxes/migration/).
+Docker currently supports: `claude`, `codex`, `opencode`,`copilot`, `gemini`, `cagent`, `kiro` and more.
+See all supported agentic AI CLIs in [Docker's docs](https://docs.docker.com/ai/sandboxes/agents/).
 
 ### Starting from scratch
 
