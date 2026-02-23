@@ -87,6 +87,8 @@ Requirements:
 // etc.
 ```
 
+> Check out [the video](https://www.youtube.com/watch?v=3TL8Ez66I3o&t=403s) for a more realistic example on how to write requirements.
+
 <details>
 <summary><strong>✨ Pro tips</strong></summary>
 
