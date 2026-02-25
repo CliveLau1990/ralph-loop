@@ -147,7 +147,7 @@ And follow the instructions to log in into Claude Code.
 
 > NB: you might need to run `chmod +x ralph.sh` to make the script executable.
 
-> ⚠️ The default "mode" is "implementation". Depending on your use case, you might want to change `.agent/PROMPT.md` to a different mode, e.g. "refactor", "review", "test" etc.
+> The default "mode" is "implementation". Depending on your use case, you might want to change `.agent/PROMPT.md` to a different mode, e.g. "refactor", "review", "test" etc.
 
 ⚠️ If you want to use a different language or testing framework, see below.
 
