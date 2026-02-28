@@ -29,8 +29,6 @@ This sandbox runs emulated aarch64 Linux. Apply as needed:
      Fix: `rm -rf node_modules/<corrupt-pkg> && npm install --ignore-scripts`
      Re-scan until clean. Only then start the dev server.
 
-- **If using TanStack Start:** Check that `src/integrations/tanstack-query/root-provider.tsx` has a default export wrapping children with `QueryClientProvider`. The starter template ships without it, causing a 500 on load.
-
 ## Main Tasks
 
 Install dependencies (using the sequence above), then install Playwright system dependencies: `sudo npx playwright install-deps chromium 2>&1`. Allow up to 10 minutes for tasks to complete.
